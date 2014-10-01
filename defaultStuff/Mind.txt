@@ -1,0 +1,26 @@
+Ideal text box should be an independent object (like class) that
+	displayed the string inside of its boundaries. has a scroll
+	bar weather it can scroll or not but if the text is to tall
+	to fit in then have scroll bar be movable and effectable.
+	I just hate when some scroll bars show up and it causes the
+	text to fold and shit.
+	
+	txtBox.draw();
+	txtBox.setStringAL(newStringAL);
+	txtBox.setStringAR(string[], line);
+	txtBox.setString(string, line, subLine);
+	ArrayList<String[]> =	txtBox.getStringAL();
+	String[] =				txtBox.getStringAR(line);
+	String =				txtBox.getString(line, subLine);
+
+	I do not know when I would need to access a subLine of a line...
+
+Want to add buttons
+	clickable.
+	draw img for it.
+
+
+Create a txt box that just displays letters in a line.
+
+
+Method that draws a dotted line. draws a black line, then 4px white lines 8 px appart.
