@@ -1,4 +1,4 @@
-package simpleFrame;
+package CodeRoots.simpleFrame;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

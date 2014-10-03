@@ -1,4 +1,4 @@
-package simpleFrame;
+package CodeRoots.simpleFrame;
 
 import javax.swing.JFrame;
 

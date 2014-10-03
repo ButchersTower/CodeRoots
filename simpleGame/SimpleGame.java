@@ -1,4 +1,4 @@
-package simpleGame;
+package CodeRoots.simpleGame;
 
 import javax.swing.JFrame;
 

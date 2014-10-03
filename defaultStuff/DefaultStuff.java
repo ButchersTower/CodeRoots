@@ -1,4 +1,4 @@
-package defaultStuff;
+package CodeRoots.defaultStuff;
 
 import java.awt.Color;
 import java.awt.Graphics;

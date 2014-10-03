@@ -1,4 +1,4 @@
-package simpleGame;
+package CodeRoots.simpleGame;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
