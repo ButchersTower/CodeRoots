@@ -2,9 +2,87 @@ package CodeRoots.defaultStuff;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 
 public class DefaultStuff {
+
+	void segSegIntersect(float[][] seg1, float[][] seg2) {
+		float[] v1 = { seg1[1][0] - seg1[0][0], seg1[1][1] - seg1[0][1] };
+		float[] v2 = { seg2[1][0] - seg2[0][0], seg2[1][1] - seg2[0][1] };
+		float t = (v1[0] * (seg2[0][1] - seg1[0][1]) - v1[1]
+				* (seg2[0][0] - seg1[0][0]))
+				/ (v1[1] * v2[0] - v1[0] * v2[1]);
+		System.out.println("t: " + t);
+		float s;
+		if (v1[0] != 0) {
+			s = (seg2[0][0] - seg1[0][0] + t * v2[0]) / v1[0];
+		} else if (v1[1] != 0) {
+			s = (seg2[0][1] - seg1[0][1] + t * v2[1]) / v1[1];
+		} else {
+			s = 0;
+			System.out.println("v1 is not going anywhere");
+		}
+		System.out.println("s: " + s);
+	}
+
+	void vectVectIntersect(float[][] vect1, float[][] vect2) {
+		// vect[0][x, y] is starting point
+		// vect[1][x, y] is the distance from [1].
+
+		float t = (vect1[1][0] * (vect2[0][1] - vect1[0][1]) - vect1[1][1]
+				* (vect2[0][0] - vect1[0][0]))
+				/ (vect1[1][1] * vect2[1][0] - vect1[1][0] * vect2[1][1]);
+		System.out.println("t: " + t);
+		float s;
+		if (vect1[1][0] != 0) {
+			s = (vect2[0][0] - vect1[0][0] + t * vect2[1][0]) / vect1[1][0];
+		} else if (vect1[1][1] != 0) {
+			s = (vect2[0][1] - vect1[0][1] + t * vect2[1][1]) / vect1[1][1];
+		} else {
+			s = 0;
+			System.out.println("vect1[1] is not going anywhere");
+		}
+		System.out.println("s: " + s);
+	}
+
+	void vectSegIntersec(float[] vect, float[][] seg) {
+		// vect[0][x, y] is starting point
+		// vect[1][x, y] is the distance from [1].
+
+		float[] v2 = { seg[1][0] - seg[0][0], seg[1][1] - seg[0][1] };
+		float t = (vect[0] * (seg[0][1] - 0) - vect[1] * (seg[0][0] - 0))
+				/ (vect[1] * v2[0] - vect[0] * v2[1]);
+		// float[] v1 = { seg[1][0] - seg[0][0], seg[1][1] - seg[0][1] };
+		// float s = (vect[1][0] * (seg[0][1] - vect[0][1]) - vect[1][1]
+		// * (seg[0][0] - vect[0][0]))
+		// / (vect[1][1] * v2[0] - vect[1][0] * v2[1]);
+		float s;
+		if (vect[0] != 0) {
+			s = (seg[0][0] - 0 + t * v2[0]) / vect[0];
+		} else if (vect[1] != 0) {
+			s = (seg[0][1] - 0 + t * v2[1]) / vect[1];
+		} else {
+			s = 0;
+			System.out.println("vect[1] is not going anywhere");
+		}
+		System.out.println("t: " + t);
+		System.out.println("s: " + s);
+	}
+
+	// round a number
+	double roundNum(double num, int place) {
+		// don't know why it uses the double of 20.
+		// or what BD or MathContext is, excluding my assumptions from looking
+		// at this code.
+		double tow = (double) (20) / (double) (num);
+		double d = tow;
+		BigDecimal bd = new BigDecimal(d);
+		bd = bd.round(new MathContext(place));
+		double rounded = bd.doubleValue();
+		return rounded;
+	}
 
 	// This works with any type of array.
 	String[] appendStringAR(String[] st, String appendage) {

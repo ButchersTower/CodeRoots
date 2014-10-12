@@ -151,54 +151,6 @@ public class VeMa {
 		return thea;
 	}
 
-	static void sayVect(String name, float[] vect) {
-		System.out.println(name + " (" + vect[0] + ", " + vect[1] + ")");
-	}
-
-	/**
-	 * array manipulation
-	 */
-
-	static int[] appendIntAR(int[] st, int appendage) {
-		int[] temp = new int[st.length + 1];
-		for (int a = 0; a < st.length; a++) {
-			temp[a] = st[a];
-		}
-		temp[temp.length - 1] = appendage;
-		return temp;
-	}
-
-	static float[] appendFloatAR(float[] st, float appendage) {
-		float[] temp = new float[st.length + 1];
-		for (int a = 0; a < st.length; a++) {
-			temp[a] = st[a];
-		}
-		temp[temp.length - 1] = appendage;
-		return temp;
-	}
-
-	int[] shortenAR(int[] in, int numToRemove) {
-		// This removed the [numToRemove] variable from an AR and compresses
-		int[] temp = new int[in.length - 1];
-		boolean reachedYet = false;
-		for (int a = 0; a < in.length; a++) {
-			System.out.println("a: " + a);
-			if (a == numToRemove) {
-				reachedYet = true;
-				a++;
-				System.out.println("newA: " + a);
-			}
-			if (a < in.length) {
-				if (reachedYet) {
-					temp[a - 1] = in[a];
-				} else {
-					temp[a] = in[a];
-				}
-			}
-		}
-		return temp;
-	}
-
 	// Vect manipulation methods
 
 	static float dot(float[] a, float[] b) {
