@@ -7,8 +7,12 @@ public class Vect3d {
 	}
 
 	static float[] normalise(float[] v) {
-		float h = (float) Math.sqrt(dot(v, v));
-		return new float[] { v[0] / h, v[1] / h, v[2] / h };
+		float hyp = (float) Math.sqrt(dot(v, v));
+		if (hyp == 0) {
+			return new float[] { 0, 0, 0 };
+		} else {
+			return new float[] { v[0] / hyp, v[1] / hyp, v[2] / hyp };
+		}
 	}
 
 	static float norm(float[] v) {

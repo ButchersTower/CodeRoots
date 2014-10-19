@@ -8,7 +8,11 @@ public class Vect2d {
 
 	static float[] normalize(float[] vect) {
 		float hyp = norm(vect);
-		return new float[] { vect[0] / hyp, vect[1] / hyp };
+		if (hyp == 0) {
+			return new float[] { 0, 0 };
+		} else {
+			return new float[] { vect[0] / hyp, vect[1] / hyp };
+		}
 	}
 
 	static float norm(float[] v) {
@@ -42,5 +46,30 @@ public class Vect2d {
 
 	static void sayVect(String name, float[] vect) {
 		System.out.println(name + " (" + vect[0] + ", " + vect[1] + ")");
+	}
+
+	static float[] a1Project(float[] a, float[] b) {
+		// return scalar of b of the projection.
+		// project point a onto wall b.
+		// |b|
+		float ba = (float) norm(b);
+		float[] bhat = { b[0] / ba, b[1] / ba };
+		float ascalar = dot(a, b) / ba;
+		float[] a1 = vectMultScalar(ascalar, bhat);
+		return a1;
+	}
+
+	public static float scalarOfProject(float[] a, float[] b) {
+		// return scalar of b of the projection.
+		// project point a onto wall b.
+		// |b|
+		float ba = (float) norm(b);
+		// float[] bhat = { b[0] / ba, b[1] / ba };
+		float ascalar = dot(a, b) / ba;
+		// float[] a1 = vectMultScalar(ascalar, bhat);
+		ascalar /= ba;
+		// ascalar * ba = hyp of projected point
+		// sayVect("a1", a1);
+		return ascalar;
 	}
 }
