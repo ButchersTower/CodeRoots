@@ -49,8 +49,7 @@ public class Vect2d {
 	}
 
 	static float[] a1Project(float[] a, float[] b) {
-		// return scalar of b of the projection.
-		// project point a onto wall b.
+		// return point of projecting point a onto wall b.
 		// |b|
 		float ba = (float) norm(b);
 		float[] bhat = { b[0] / ba, b[1] / ba };
@@ -64,12 +63,8 @@ public class Vect2d {
 		// project point a onto wall b.
 		// |b|
 		float ba = (float) norm(b);
-		// float[] bhat = { b[0] / ba, b[1] / ba };
 		float ascalar = dot(a, b) / ba;
-		// float[] a1 = vectMultScalar(ascalar, bhat);
 		ascalar /= ba;
-		// ascalar * ba = hyp of projected point
-		// sayVect("a1", a1);
 		return ascalar;
 	}
 }
