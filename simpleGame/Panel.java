@@ -75,15 +75,6 @@ public class Panel extends JPanel implements Runnable {
 	public void gLoop() {
 		while (running) {
 
-			// Do the things you want the gLoop to do below here
-
-			// System.out.println("runTime: " + timer());
-
-			// And above here.
-			drwGm();
-
-			ticks++;
-
 			// Runs once a second and keeps track of ticks;
 			// 1000 ms since last output
 			if (timer() - lastSec > 1000) {
@@ -99,6 +90,15 @@ public class Panel extends JPanel implements Runnable {
 				lastSec = (System.currentTimeMillis() - startTime);
 			}
 
+			// Do the things you want the gLoop to do below here
+
+			// System.out.println("runTime: " + timer());
+
+			// And above here.
+			drwGm(g);
+
+			ticks++;
+
 			// Limits the ticks per second
 
 			// if nextTick is later then timer then sleep till next tick
@@ -110,7 +110,6 @@ public class Panel extends JPanel implements Runnable {
 					Thread.sleep(sleepTime);
 				} catch (InterruptedException e) {
 				}
-
 				nextTick += mpt;
 			}
 
