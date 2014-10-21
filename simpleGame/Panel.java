@@ -80,7 +80,7 @@ public class Panel extends JPanel implements Runnable {
 			// System.out.println("runTime: " + timer());
 
 			// And above here.
-			drwGm(g);
+			drwGm();
 
 			ticks++;
 
@@ -137,7 +137,7 @@ public class Panel extends JPanel implements Runnable {
 
 	}
 
-	public void drwGm(Graphics g) {
+	public void drwGm() {
 		Graphics g2 = this.getGraphics();
 		g2.drawImage(image, 0, 0, null);
 		g2.dispose();
