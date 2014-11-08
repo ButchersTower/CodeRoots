@@ -12,26 +12,24 @@ public class Panel extends JPanel implements Runnable {
 
 	// extends JPanel implements Runnable
 
-	int width = 160;
-	int height = 200;
+	private int width = 160;
+	private int height = 200;
 
-	Image[] imageAr;
+	private Image[] imageAr;
 
-	Thread thread;
-	Image image;
-	Graphics g;
+	private Thread thread;
+	private Image image;
+	private Graphics g;
 
 	// Vars for gLoop Below
-	int tps = 10;
-	int mpt = 1000 / tps;
-	long lastTick = 0;
-	int sleepTime = 0;
-	long lastSec = 0;
-	int ticks = 0;
-	long startTime;
-	long runTime;
-	long nextTick = 0;
-	boolean running = false;
+	private int tps = 10;
+	private int mpt = 1000 / tps;
+	private int sleepTime = 0;
+	private long lastSec = 0;
+	private int ticks = 0;
+	private long startTime;
+	private long nextTick = 0;
+	private boolean running = false;
 
 	// Vars for gLoop Above
 
@@ -95,7 +93,7 @@ public class Panel extends JPanel implements Runnable {
 			// System.out.println("runTime: " + timer());
 
 			// And above here.
-			drwGm(g);
+			drwGm();
 
 			ticks++;
 
