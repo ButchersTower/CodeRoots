@@ -77,4 +77,95 @@ public class Vect2d {
 		System.out.println("vecta: " + vecta);
 		return vect;
 	}
+
+	/**
+	 * Thea methods
+	 */
+
+	static float pointToThea(float[] point) {
+		float pointThea = (float) Math.atan(point[1] / point[0]);
+		// sayVect("point", point);
+		// System.out.println("pointFirst: " + pointThea + " ("
+		// + (pointThea * (180 / Math.PI) + ")"));
+		if (point[1] > 0 && pointThea < 0) {
+			// System.out.println("change1");
+			pointThea = (float) Math.PI + pointThea;
+		} else if (point[1] < 0 && pointThea > 0) {
+			// y is less than zero and thea is greater than zero.
+			// System.out.println("change2");
+			pointThea = -(float) Math.PI + pointThea;
+		}
+		// System.out.println("pointMid: " + pointThea + " ("
+		// + (pointThea * (180 / Math.PI) + ")"));
+		if (pointThea == 0 && point[0] < 0) {
+			// System.out.println("zero to 360.");
+			pointThea = (float) Math.PI;
+		}
+		return pointThea;
+	}
+
+	static float[] theaToPoint(float thea, float radius) {
+		return new float[] { (float) Math.cos(thea) * radius,
+				(float) Math.sin(thea) * radius };
+	}
+
+	static float[] rotPoint(float thea, float[] point) {
+		// System.out.println("**rotPoint**");
+		// System.out.println("inThea: " + thea + " (" + ((thea) * (180 /
+		// Math.PI)));
+		float pointa = Vect2d.norm(point);
+		boolean bothNeg = false;
+		if (point[0] < 0 && point[1] < 0) {
+			// bothNeg = true;
+		}
+		// converts point to thea.
+		float pointThea = pointToThea(point);
+		// sayVect("point", point);
+		// System.out.println("pointThea: " + pointThea);
+
+		// adds theatas.
+		float newThea = pointThea + thea;
+		// System.out.println("old THEA: " + newThea + " ("
+		// + (newThea * (180 / Math.PI)) + ")");
+		if (newThea > Math.PI) {
+			newThea = newThea - (float) Math.PI * 2;
+		} else if (newThea < -Math.PI) {
+			newThea = (float) (2 * Math.PI) + newThea;
+		}
+
+		// thea to point.
+		// newPoint is hypotnuse.
+		float[] newPoint = new float[2];
+		// float nx = (float) Math.cos(newThea) * pointa;
+		// float ny = (float) Math.tan(newThea) * nx;
+		// System.out.println("sin: " + Math.sin(newThea) + "    pointa: "
+		// + pointa);
+		// System.out.println("tan: " + Math.tan(newThea));
+		// System.out.println("NEW THEA: " + newThea + " ("
+		// + (newThea * (180 / Math.PI)) + ")");
+		/**
+		 * CHEATE. radius should be pointa, but in order to make the program
+		 * lookbetter it is set to radius. Fix the code and make it so pinta is
+		 * equal to radius anyway.
+		 */
+		// System.out.println("newThea: " + newThea + "(" + newThea + ")");
+		float ny = (float) Math.sin(newThea) * pointa;
+		float nx = 1 / ((float) Math.tan(newThea) / ny);
+		if (newThea > Math.PI / 2) {
+			// System.out.println("bug ++");
+		} else if (newThea < -Math.PI / 2) {
+			// System.out.println("bug --");
+		}
+		if (Float.isNaN(nx)) {
+			nx = pointa;
+		}
+		// System.out.println("bothNeg: " + bothNeg);
+		if (bothNeg) {
+			nx = -nx;
+			ny = -ny;
+		}
+		// System.out.println("afterRot (" + nx + ", " + ny + ")");
+
+		return new float[] { nx, ny };
+	}
 }
