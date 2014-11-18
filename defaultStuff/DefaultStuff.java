@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 
+import ColePole.lib.JaMa;
+import ColePole.lib.Vect2d;
+
 public class DefaultStuff {
 
 	void segSegIntersect(float[][] seg1, float[][] seg2) {
@@ -499,4 +502,98 @@ public class DefaultStuff {
 		return ascalar;
 	}
 
+	float[] getTangentPoints(float[] play, float pRad, float[] tree, float tRad) {
+		// Plug in play circle and tree circle, return the two lines from
+		// playLoc to the points tangent tree.
+		// [0 + 1] is (x, y) of plus thea
+		// [2] is the tan thea on tree of plus.
+		// [3 + 4] is (x, y) of minus thea
+		// [5] is the tan thea on tree of sub.
+		// [6] is the length from play to each point.
+		float[] delta = Vect2d.vectSub(tree, play);
+		float hyp = Vect2d.norm(delta);
+		float opp = pRad + tRad;
+		float adj = (float) Math.sqrt(hyp * hyp - opp * opp);
+		float treeThea = JaMa.pointToThea(delta);
+		float shapeThea = JaMa.pointToThea(new float[] { adj, opp });
+		float addThea = JaMa.theaAdd(treeThea, shapeThea);
+		float subThea = JaMa.theaSub(treeThea, shapeThea);
+		float[] addPoint = JaMa.theaToPoint(addThea, adj);
+		float[] subPoint = JaMa.theaToPoint(subThea, adj);
+		// make sub thea and plus thea relative to tree.
+		// plus point minus tree
+		float[] relAddPoint = Vect2d.vectSub(Vect2d.vectAdd(play, addPoint),
+				tree);
+		float[] relSubPoint = Vect2d.vectSub(Vect2d.vectAdd(play, subPoint),
+				tree);
+		float relAddThea = JaMa.pointToThea(relAddPoint);
+		float relSubThea = JaMa.pointToThea(relSubPoint);
+		addPoint = Vect2d.normalize(addPoint);
+		subPoint = Vect2d.normalize(subPoint);
+		return new float[] { addPoint[0], addPoint[1], relAddThea, subPoint[0],
+				subPoint[1], relSubThea, adj };
+	}
+
+	float[] quadEq(float a, float b, float c) {
+		float ans1 = (float) (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+		float ans2 = (float) (-b - Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+		float[] answ = new float[0];
+		try {
+			answ = JaMa.appendFloatAr(answ, ans1);
+		} catch (Exception ex) {
+		}
+		try {
+			answ = JaMa.appendFloatAr(answ, ans2);
+		} catch (Exception ex) {
+		}
+		return answ;
+	}
+
+	float[] scalarOfVectOnCirc(float[] play, float playR, float[] circ,
+			float circR, float[] vect) {
+		/**
+		 * Need to handle if vectX is zero.
+		 */
+
+		// get point slope formula of the vect.
+		// relative 0? for now.
+		// y = (vectY / vectX) ( x - playX) + playY
+		// (x - tx)^2 + (y - ty)^2 = (pR + tR)^2
+		// (x - tx)^2 + (y - ty)^2 - (pR + tR)^2 = 0
+		// simplify to a quadratic then use formula.
+		// (x - tx)^2 = x^2 - 2xtx + tx^2
+		// x^2 - 2x*tx + tx^2 + ((vectY / vectX) (x - playX) + playY)^2 -
+		// 2*((vectY / vectX) (x - circX) + vectY)*tx + tx^2 - (pR + tR)^2 = 0
+		// float xinter = vect[0] * -play[1] / vect[1] + play[0];
+		float yinter = vect[1] * -play[0] / vect[0] + play[1];
+		System.out.println("xinter: " + yinter);
+		float m = vect[1] / vect[0];
+		float a = m * m + 1;
+		// float b = 2 * (m * xinter + m * circ[1] - circ[1]);
+		// float b = -2 * circ[0] + 2 * m * xinter - 2 * m * circ[1];
+		float b = 2 * m * yinter - 2 * circ[0] - 2 * m * circ[1];
+		// float c = 2 * circ[1] * circ[1] - 2 * yinter * circ[1] + yinter
+		// * yinter;
+		float c = circ[0] * circ[0] + yinter * yinter + circ[1] * circ[1] - 2
+				* yinter * circ[1] - (playR + circR) * (playR + circR);
+		System.out.println("(a, b, c) : (" + a + ", " + b + ", " + c + ")");
+		float[] quad = quadEq(a, b, c);
+		System.out.println("quad[0]: " + quad[0]);
+		System.out.println("quad[1]: " + quad[1]);
+		// subtract playLoc from quad. or dont.
+		// use x to get vect y. or use x to get scalar of vect.
+		float vectX1 = quad[0] - play[0];
+		float xScale1 = vectX1 / vect[0];
+		float vectY1 = vect[1] * xScale1;
+		Vect2d.sayVect("vect", vect);
+		System.out.println("vectY: " + vectY1);
+
+		float vectX2 = quad[1] - play[0];
+		float xScale2 = vectX2 / vect[0];
+		float vectY2 = vect[1] * xScale2;
+		Vect2d.sayVect("vect", vect);
+		System.out.println("vectY: " + vectY2);
+
+		return new float[] { xScale1, xScale2 };
+	}
 }

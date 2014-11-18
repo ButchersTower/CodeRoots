@@ -67,4 +67,14 @@ public class Vect2d {
 		ascalar /= ba;
 		return ascalar;
 	}
+
+	public static float[] scaleVectTo(float[] vect, float scale) {
+		System.out.println("scale: " + scale);
+		float vecta = norm(vect);
+		vect[0] *= scale / vecta;
+		vect[1] *= scale / vecta;
+		vecta = norm(vect);
+		System.out.println("vecta: " + vecta);
+		return vect;
+	}
 }
