@@ -52,8 +52,7 @@ public class Panel extends JPanel implements MouseListener, KeyListener {
 	 */
 
 	public void pStart() {
-		imageInit();
-
+		// imageInit();
 	}
 
 	/**
